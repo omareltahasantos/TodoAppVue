@@ -3,35 +3,35 @@
         <div class="container pt-5">
             <h1 class=" text-center todo ">#todo</h1>
             <div class="row pt-4 d-flex justify-content-center">
-                <div class="col-lg-2 offset-lg-1">
+                <div class="col-md-2 offset-md-1">
                     <button class="btn allbtn" @change="show('all')" @click="show('all', '')" :class="{marker: all === true}" >All</button>
                 </div>
-                <div class="col-lg-2 offset-lg-1">
+                <div class="col-md-2 offset-md-1">
                     <button class="btn activebtn" @change="show('active')" @click="show('active', false)"  :class="{marker: type === false}">Active</button>
                 </div>
-                <div class="col-lg-2 offset-lg-1">
+                <div class="col-md-2 offset-md-1">
                     <button 
                     class="btn completedbtn " 
                     @change="show('completed')"   @click="show('completed', true)" :class="{marker: type === true }">Completed</button>
                 </div>
             </div>
-            <div class="row pt-3">
-                <div class="col-lg-5 offset-lg-3">
+            <div class="row pt-3"  v-if="statusTask != 'completed'">
+                <div class="col-md-5 offset-md-3">
                       <input 
                       v-model="newTask" 
                       type="text" class="form-control" 
                       placeholder="Enter tasks" />
                 </div>
-                <div class="col-lg-2">
-                 <button 
-                 @click="addTask()"
-                 type="button" 
-                 class="btn btn-outline-primary insertar">Insertar</button>
+                <div class="col-md-2">
+                    <button 
+                    @click="addTask()"
+                    type="button" 
+                    class="btn btn-outline-primary insertar">Add Task</button>
                 </div>
             </div>
 
             <div class="row pt-5">
-                <div class="col-lg-4 offset-lg-3" >
+                <div class="col-md-4 offset-md-3" >
                     <ul v-for="task, index in tasks" :key="index">
                         <li :class="{completed: task.completed}" v-if="statusTask === 'all' ">
                             <input type="checkbox"  :id="task.taskId" :value="task.taskId" v-model="checkbox" @click="check()" @change="check()" >
@@ -47,7 +47,15 @@
                      
                     </ul>
                 </div>
+               
             </div>
+            <div class="row">
+                 <div class="col-md-4 offset-md-8">
+                    <button class="btn btn-outline-primary delete" v-if="statusTask === 'completed'" @click="deleteAll()">Delete all</button>
+                </div>
+            </div>
+
+            
             
         </div>
     </div>
@@ -108,9 +116,26 @@
                     this.all = false
                 }
                return this.statusTask
+            },
+            deleteAll(){
+
+                for (let index = 0; index < this.tasks.length; index++) {
+                    console.log(index)
+
+                   if(this.tasks[index].completed === true){
+                       console.log("Esta tarea esta completada" + this.tasks[index].completed)
+                       console.log("Este es el indice" + index)
+                       console.log(this.tasks[index].text)
+                       this.tasks.splice(index--, 1)
+
+                   
+                   }
+                   
+                    
+                }
             }
          }
-        }
+    }
 </script>
 
 <style scoped>
@@ -147,6 +172,17 @@ color: #000000;
 }
 .insertar{
     background: #2F80ED;
+    font-family: Montserrat;
+    font-style: normal;
+    font-weight: 600;
+    font-size: 17px;
+    line-height: 17px;
+  
+    color: #FFFFFF;
+}
+
+.delete{
+     background: #EB5757;
     font-family: Montserrat;
     font-style: normal;
     font-weight: 600;
