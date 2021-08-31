@@ -3,7 +3,8 @@
   "description": "App para las tareas",
   "version": "1.0.0",
   "engines": {
-    "node": "^16.5.0"
+    "node": "^16.5.0",
+    "npm": "^7.19.1"
   },
   "author": "omareltahasantos <omareltahasan6@gmail.com>",
   "license": "MIT",
