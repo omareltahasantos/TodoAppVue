@@ -29,34 +29,28 @@
                     class="btn btn-outline-primary insertar">Add Task</button>
                 </div>
             </div>
-
             <div class="row pt-5">
                 <div class="col-md-4 offset-md-3" >
                     <ul v-for="task, index in tasks" :key="index">
                         <li :class="{completed: task.completed}" v-if="statusTask === 'all' ">
-                            <input type="checkbox"  :id="task.taskId" :value="task.taskId" v-model="checkbox" @click="check()" @change="check()" >
-                          Tarea: {{task.text}}
+                            <input class=" mr-1" type="checkbox"  :id="task.taskId" :value="task.taskId" v-model="checkbox" @click="check()" @change="check()" >
+                                    Tarea: {{task.text}}
                         </li>
                         <li :class="{completed: task.completed}" v-if="(statusTask === 'active') && (task.completed === false)">
-                            <input type="checkbox"  :id="task.taskId" :value="task.taskId" v-model="checkbox" @click="check()" @change="check()" >
-                           Tarea: {{task.text}}
+                            <input class=" mr-1" type="checkbox"  :id="task.taskId" :value="task.taskId" v-model="checkbox" @click="check()" @change="check()" >
+                                 Tarea: {{task.text}}
                         </li>
-                        <li  v-if="(statusTask === 'completed') && (task.completed === true) ">
-                          Tarea: {{task.text}}
+                        <li  style="float-left" v-if="(statusTask === 'completed') && (task.completed === true) ">
+                            Tarea: {{task.text}} <button type="button" class="trash" @click="deleteOne(task.taskId)"><i class="fas fa-trash"></i></button>
                         </li>
-                     
                     </ul>
                 </div>
-               
             </div>
             <div class="row">
                  <div class="col-md-4 offset-md-8">
-                    <button class="btn btn-outline-primary delete" v-if="statusTask === 'completed'" @click="deleteAll()">Delete all</button>
+                    <button  class="btn btn-outline-primary delete" v-if="statusTask === 'completed'" @click="deleteAll()">Delete all</button>
                 </div>
-            </div>
-
-            
-            
+            </div>   
         </div>
     </div>
 </template>
@@ -68,7 +62,7 @@
                 checkbox: [],
                 newTask: "",
                 tasks: [],
-                contador: 1,
+                contador: 0,
                 statusTask: "all",
                 all: true, 
                 type: Boolean
@@ -103,7 +97,7 @@
             },
             show(status, boolean){
                 this.statusTask = status;
-                console.log(this.statusTask)
+               
                 
                 if (boolean === "") {
                     this.all = true
@@ -120,25 +114,42 @@
             deleteAll(){
 
                 for (let index = 0; index < this.tasks.length; index++) {
-                    console.log(index)
-
+             
                    if(this.tasks[index].completed === true){
-                       console.log("Esta tarea esta completada" + this.tasks[index].completed)
-                       console.log("Este es el indice" + index)
-                       console.log(this.tasks[index].text)
+
                        this.tasks.splice(index--, 1)
 
-                   
                    }
                    
                     
                 }
+            },
+            deleteOne(taskId){
+                    
+
+                    for (let index = 0; index < this.tasks.length; index++) {
+                        
+                        if (taskId === this.tasks[index].taskId) {
+                            
+                            this.tasks.splice(index, 1)
+
+                        }
+                        
+                    }
             }
          }
     }
 </script>
 
 <style scoped>
+input[type=checkbox] {
+    transform: scale(1.5);
+}
+.trash{
+ background: none;
+  border: 0;
+  color: inherit;
+  }
 .completed {
   text-decoration: line-through;
   color: grey;
