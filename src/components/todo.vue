@@ -42,7 +42,7 @@
                            Tarea: {{task.text}}
                         </li>
                         <li  v-if="(statusTask === 'completed') && (task.completed === true) ">
-                          Tarea: {{task.text}}
+                          Tarea: {{task.text}}   
                         </li>
                      
                     </ul>
